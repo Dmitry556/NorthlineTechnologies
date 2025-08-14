@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function RootPage() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -23,9 +24,9 @@ export default function RootPage() {
     setBannerDismissed(true)
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
+    const formData = new FormData(e.target as HTMLFormElement)
     const data = {
       companyName: formData.get('companyName'),
       email: formData.get('email'),
@@ -38,7 +39,7 @@ export default function RootPage() {
     
     // Close form and show success message
     setShowForm(false)
-    alert('Thank you! We\'ll be in touch within 24 hours to set up your free month.')
+    alert('Thank you! We&apos;ll be in touch within 24 hours to set up your free month.')
   }
 
   const colors = {
@@ -268,7 +269,7 @@ export default function RootPage() {
 
   const testimonials = [
     {
-      quote: "Northline took our infrastructure from constant fires to complete stability. We haven't had an incident in eight months. Our engineers can finally focus on building products instead of maintaining servers.",
+      quote: "Northline took our infrastructure from constant fires to complete stability. We haven&apos;t had an incident in eight months. Our engineers can finally focus on building products instead of maintaining servers.",
       author: "Aden Fraser",
       title: "CTO at AutonomyAI"
     },
@@ -691,8 +692,8 @@ export default function RootPage() {
                   fontSize: '16px',
                   transition: 'all 0.2s ease'
                 }}
-                onMouseEnter={(e) => e.target.style.background = 'rgba(255,255,255,0.3)'}
-                onMouseLeave={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.3)'}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
               >
                 ×
               </button>
@@ -752,8 +753,8 @@ export default function RootPage() {
                 transition: 'all 0.2s ease',
                 position: 'relative'
               }}
-                onMouseEnter={(e) => e.target.style.color = colors.text}
-                onMouseLeave={(e) => e.target.style.color = colors.muted}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.text}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.muted}
               >
                 Capabilities
               </a>
@@ -764,8 +765,8 @@ export default function RootPage() {
                 fontWeight: '500',
                 transition: 'all 0.2s ease'
               }}
-                onMouseEnter={(e) => e.target.style.color = colors.text}
-                onMouseLeave={(e) => e.target.style.color = colors.muted}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.text}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.muted}
               >
                 Why Northline
               </a>
@@ -776,8 +777,8 @@ export default function RootPage() {
                 fontWeight: '500',
                 transition: 'all 0.2s ease'
               }}
-                onMouseEnter={(e) => e.target.style.color = colors.text}
-                onMouseLeave={(e) => e.target.style.color = colors.muted}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.text}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.muted}
               >
                 Contact
               </a>
@@ -930,9 +931,11 @@ export default function RootPage() {
                   padding: '4px',
                   transition: 'opacity 0.3s ease'
                 }}>
-                  <img 
+                  <Image 
                     src="/CompTIA AuthPartner-4c_nobkgd(3).png" 
                     alt="CompTIA Authorized Partner" 
+                    width={120}
+                    height={48}
                     style={{ 
                       height: '48px', 
                       width: 'auto',
@@ -948,9 +951,11 @@ export default function RootPage() {
                   padding: '4px',
                   transition: 'opacity 0.3s ease'
                 }}>
-                  <img 
+                  <Image 
                     src="/cisco-certified-partner-logo-png_seeklogo-203689.png" 
                     alt="Cisco Certified Partner" 
+                    width={120}
+                    height={48}
                     style={{ 
                       height: '48px', 
                       width: 'auto',
@@ -966,9 +971,11 @@ export default function RootPage() {
                   padding: '4px',
                   transition: 'opacity 0.3s ease'
                 }}>
-                  <img 
+                  <Image 
                     src="/vmware-premier-solution-provider-logo-datapac-e1443782052632.jpg" 
                     alt="VMware Premier Solution Provider" 
+                    width={120}
+                    height={48}
                     style={{ 
                       height: '48px', 
                       width: 'auto',
@@ -984,9 +991,11 @@ export default function RootPage() {
                   padding: '4px',
                   transition: 'opacity 0.3s ease'
                 }}>
-                  <img 
+                  <Image 
                     src="/iqgeo.png" 
                     alt="IQGeo Implementation Partner Certified" 
+                    width={120}
+                    height={48}
                     style={{ 
                       height: '48px', 
                       width: 'auto',
@@ -1126,7 +1135,7 @@ export default function RootPage() {
                   gap: '8px'
                 }}>
                   {icons.check}
-                  What's included:
+                  What&apos;s included:
                 </h3>
                 
                 <div style={{
@@ -1207,7 +1216,7 @@ export default function RootPage() {
                   lineHeight: '1.6'
                 }}>
                   Fast-growing companies trust us to handle their entire IT backbone. We serve startups that need to move quickly, 
-                  remote teams that demand reliable access, and digital businesses that can't afford downtime.
+                  remote teams that demand reliable access, and digital businesses that can&apos;t afford downtime.
                 </p>
               </div>
               
@@ -1330,12 +1339,12 @@ export default function RootPage() {
                   cursor: 'pointer'
                 }}
                   onMouseEnter={(e) => {
-                    e.target.style.opacity = '1'
-                    e.target.style.color = colors.text
+                    (e.target as HTMLElement).style.opacity = '1'
+                    ;(e.target as HTMLElement).style.color = colors.text
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.opacity = '0.6'
-                    e.target.style.color = colors.muted
+                    (e.target as HTMLElement).style.opacity = '0.6'
+                    ;(e.target as HTMLElement).style.color = colors.muted
                   }}
                 >
                   {company.logo}
@@ -1370,7 +1379,7 @@ export default function RootPage() {
                       lineHeight: '1',
                       fontFamily: 'serif',
                       opacity: 0.3
-                    }}>"</span>
+                    }}>&quot;</span>
                     {testimonial.quote}
                   </blockquote>
                   <div style={{
@@ -1794,8 +1803,8 @@ export default function RootPage() {
                 justifyContent: 'center',
                 transition: 'all 0.2s ease'
               }}
-              onMouseEnter={(e) => e.target.style.background = 'rgba(255,255,255,0.2)'}
-              onMouseLeave={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
+              onMouseEnter={(e) => (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
+              onMouseLeave={(e) => (e.target as HTMLElement).style.background = 'rgba(255,255,255,0.1)'}
             >
               ×
             </button>
@@ -1824,7 +1833,7 @@ export default function RootPage() {
                 fontSize: '16px',
                 maxWidth: 'none'
               }}>
-                Get complete IT infrastructure setup at no charge. We'll be in touch within 24 hours.
+                Get complete IT infrastructure setup at no charge. We&apos;ll be in touch within 24 hours.
               </p>
             </div>
 
@@ -1976,7 +1985,7 @@ export default function RootPage() {
                 lineHeight: '1.4',
                 maxWidth: 'none'
               }}>
-                No credit card required. We'll set up a 30-minute call to understand your needs and get you started.
+                No credit card required. We&apos;ll set up a 30-minute call to understand your needs and get you started.
               </p>
             </form>
           </div>
