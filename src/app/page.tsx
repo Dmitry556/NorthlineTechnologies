@@ -891,13 +891,19 @@ export default function RootPage() {
               </button>
             </div>
 
-            {/* Certified By Section */}
-            <div style={{
-              marginTop: '64px',
-              textAlign: 'center'
-            }}>
+          </div>
+        </section>
+
+        {/* Trust & Certifications - Logo Slider */}
+        <section style={{
+          padding: '32px 0',
+          background: colors.bg,
+          borderBottom: `1px solid ${colors.keyline}`
+        }}>
+          <div style={containerStyle}>
+            <div style={{ textAlign: 'center' }}>
               <p style={{
-                fontSize: '13px',
+                fontSize: '12px',
                 fontWeight: '600',
                 color: colors.muted,
                 textTransform: 'uppercase',
@@ -911,112 +917,82 @@ export default function RootPage() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: '32px',
-                flexWrap: 'wrap',
-                opacity: 0.8
+                gap: '48px',
+                flexWrap: 'nowrap',
+                opacity: 0.7,
+                transition: 'opacity 0.3s ease',
+                overflow: 'hidden'
               }}>
-                {/* AWS Certified */}
+                {/* CompTIA Authorized Partner */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  background: 'rgba(255, 153, 0, 0.1)',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(255, 153, 0, 0.2)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'default'
+                  padding: '4px',
+                  transition: 'opacity 0.3s ease'
                 }}>
-                  <svg width="32" height="20" viewBox="0 0 80 48" fill="none">
-                    <rect width="80" height="48" rx="4" fill="#232F3E"/>
-                    <path d="M20.35 34.04c0 .44-.04.8-.13 1.07-.09.27-.21.52-.38.75-.17.23-.38.41-.63.54-.25.13-.53.19-.84.19-.49 0-.89-.15-1.19-.46-.3-.31-.45-.72-.45-1.24v-6.64h1.24v6.55c0 .24.06.43.17.56.11.13.26.19.45.19.19 0 .34-.06.45-.19.11-.13.17-.32.17-.56v-6.55h1.24v6.64-.03.03z" fill="#FF9900"/>
-                    <path d="M27.17 30.97l-1.97 4.98h-1.3l-1.97-4.98h1.31l1.31 3.42 1.31-3.42h1.31z" fill="#FF9900"/>
-                    <path d="M30.91 29.73h1.24v1.24h-1.24v-1.24zm0 1.8h1.24v4.37h-1.24v-4.37z" fill="#FF9900"/>
-                    <path d="M38.91 31.53v4.37h-1.24v-4.15c0-.32-.08-.57-.23-.74-.15-.17-.37-.25-.65-.25-.35 0-.62.11-.81.34-.19.23-.28.54-.28.93v3.87h-1.24v-4.37h1.24v.65c.15-.23.35-.41.59-.53.24-.12.51-.18.81-.18.57 0 1.01.17 1.33.5.32.33.48.79.48 1.36z" fill="#FF9900"/>
-                  </svg>
+                  <img 
+                    src="/CompTIA AuthPartner-4c_nobkgd(3).png" 
+                    alt="CompTIA Authorized Partner" 
+                    style={{ 
+                      height: '48px', 
+                      width: 'auto',
+                      objectFit: 'contain'
+                    }} 
+                  />
                 </div>
 
-                {/* CompTIA */}
+                {/* Cisco Certified Partner */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  background: 'rgba(218, 41, 28, 0.1)',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(218, 41, 28, 0.2)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'default'
+                  padding: '4px',
+                  transition: 'opacity 0.3s ease'
                 }}>
-                  <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
-                    <rect width="100" height="100" rx="8" fill="#DA291C"/>
-                    <path d="M25 25h15v15H25V25zm35 0h15v15H60V25zM25 60h15v15H25V60zm35 0h15v15H60V60z" fill="white"/>
-                    <text x="50" y="85" textAnchor="middle" fontSize="12" fill="white" fontWeight="bold">CompTIA</text>
-                  </svg>
+                  <img 
+                    src="/cisco-certified-partner-logo-png_seeklogo-203689.png" 
+                    alt="Cisco Certified Partner" 
+                    style={{ 
+                      height: '48px', 
+                      width: 'auto',
+                      objectFit: 'contain'
+                    }} 
+                  />
                 </div>
 
-                {/* VMware */}
+                {/* VMware Partner */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  background: 'rgba(96, 122, 142, 0.1)',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(96, 122, 142, 0.2)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'default'
+                  padding: '4px',
+                  transition: 'opacity 0.3s ease'
                 }}>
-                  <svg width="32" height="28" viewBox="0 0 120 100" fill="none">
-                    <rect width="120" height="100" rx="6" fill="#607A8E"/>
-                    <text x="60" y="35" textAnchor="middle" fontSize="16" fill="white" fontWeight="bold">VMware</text>
-                    <circle cx="60" cy="65" r="12" stroke="white" strokeWidth="2" fill="none"/>
-                    <path d="M52 65h16M60 57v16" stroke="white" strokeWidth="2"/>
-                  </svg>
+                  <img 
+                    src="/vmware-premier-solution-provider-logo-datapac-e1443782052632.jpg" 
+                    alt="VMware Premier Solution Provider" 
+                    style={{ 
+                      height: '48px', 
+                      width: 'auto',
+                      objectFit: 'contain'
+                    }} 
+                  />
                 </div>
 
-                {/* Cisco */}
+                {/* IQGeo Certified Partner */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  background: 'rgba(0, 188, 235, 0.1)',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(0, 188, 235, 0.2)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'default'
+                  padding: '4px',
+                  transition: 'opacity 0.3s ease'
                 }}>
-                  <svg width="32" height="28" viewBox="0 0 120 100" fill="none">
-                    <rect width="120" height="100" rx="6" fill="#00BCEB"/>
-                    <text x="60" y="40" textAnchor="middle" fontSize="18" fill="white" fontWeight="bold">cisco</text>
-                    <rect x="20" y="55" width="8" height="25" fill="white"/>
-                    <rect x="32" y="50" width="8" height="30" fill="white"/>
-                    <rect x="44" y="45" width="8" height="35" fill="white"/>
-                    <rect x="56" y="40" width="8" height="40" fill="white"/>
-                    <rect x="68" y="45" width="8" height="35" fill="white"/>
-                    <rect x="80" y="50" width="8" height="30" fill="white"/>
-                    <rect x="92" y="55" width="8" height="25" fill="white"/>
-                  </svg>
-                </div>
-
-                {/* Cloud Security Alliance */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 16px',
-                  background: 'rgba(0, 123, 191, 0.1)',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(0, 123, 191, 0.2)',
-                  transition: 'all 0.2s ease',
-                  cursor: 'default'
-                }}>
-                  <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
-                    <rect width="100" height="100" rx="8" fill="#007BBF"/>
-                    <path d="M50 20c8.28 0 15 6.72 15 15 0 8.28-6.72 15-15 15s-15-6.72-15-15c0-8.28 6.72-15 15-15zm0 40c11.05 0 20-8.95 20-20S61.05 20 50 20 30 28.95 30 40s8.95 20 20 20z" fill="white"/>
-                    <text x="50" y="85" textAnchor="middle" fontSize="8" fill="white" fontWeight="bold">CSA</text>
-                  </svg>
+                  <img 
+                    src="/iqgeo.png" 
+                    alt="IQGeo Implementation Partner Certified" 
+                    style={{ 
+                      height: '48px', 
+                      width: 'auto',
+                      objectFit: 'contain'
+                    }} 
+                  />
                 </div>
               </div>
             </div>
@@ -1422,13 +1398,13 @@ export default function RootPage() {
 
         {/* Benefits */}
         <section className="section-bg" style={{
-          padding: '140px 0',
+          padding: '80px 0',
           background: colors.surface
         }} id="why-northline">
           <div style={containerStyle}>
             <h2 style={{
               textAlign: 'center',
-              marginBottom: '100px'
+              marginBottom: '60px'
             }}>
               Why Companies Switch to Northline
             </h2>
@@ -1436,11 +1412,11 @@ export default function RootPage() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-              gap: '48px'
+              gap: '32px'
             }}>
               {benefits.map((benefit, index) => (
                 <div key={index} className="card benefit-card" style={{
-                  padding: '56px 40px',
+                  padding: '40px 32px',
                   textAlign: 'center'
                 }}>
                   <div style={{
@@ -1474,11 +1450,11 @@ export default function RootPage() {
         </section>
 
         {/* How We Work */}
-        <section style={{ padding: '140px 0' }}>
+        <section style={{ padding: '80px 0' }}>
           <div style={containerStyle}>
             <h2 style={{
               textAlign: 'center',
-              marginBottom: '100px'
+              marginBottom: '60px'
             }}>
               How We Work
             </h2>
@@ -1486,8 +1462,8 @@ export default function RootPage() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '56px',
-              marginBottom: '80px'
+              gap: '40px',
+              marginBottom: '60px'
             }}>
               {[
                 { step: '01', title: 'Document', desc: 'We document everything. You own your runbooks, your architecture diagrams, and your recovery plans.', icon: icons.document },
@@ -1562,7 +1538,7 @@ export default function RootPage() {
 
         {/* Final CTA */}
         <section style={{
-          padding: '140px 0',
+          padding: '100px 0',
           background: `linear-gradient(135deg, ${colors.surface} 0%, ${colors.bg} 100%)`,
           textAlign: 'center',
           borderTop: `1px solid ${colors.keyline}`,
