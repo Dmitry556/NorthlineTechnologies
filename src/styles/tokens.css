@@ -1,0 +1,115 @@
+:root {
+  /* Neutrals */
+  --nl-bg: #0b0c0e;
+  --nl-surface: #111317;
+  --nl-elev: #161a20;
+  --nl-text: #e9edf3;
+  --nl-muted: #a6b0c3;
+  --nl-keyline: rgba(233,237,243,0.08);
+  
+  /* Brand */
+  --nl-brand: #7aa2ff;
+  --nl-brand-ink: #0a1a3a;
+  --nl-accent: #8ce0c3;
+  
+  /* States */
+  --nl-success: #79e2a6;
+  --nl-danger: #ff6b6b;
+  --nl-warning: #ffd166;
+  
+  /* Borders/Shadows */
+  --nl-border: rgba(255,255,255,0.08);
+  --nl-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  
+  /* Typography Scale */
+  --nl-text-xs: clamp(12px, 1vw, 14px);
+  --nl-text-sm: clamp(14px, 1.2vw, 16px);
+  --nl-text-base: clamp(16px, 1.4vw, 18px);
+  --nl-text-lg: clamp(18px, 2vw, 24px);
+  --nl-text-xl: clamp(24px, 2.8vw, 36px);
+  --nl-text-2xl: clamp(32px, 4vw, 56px);
+  
+  /* Space Scale */
+  --nl-space-1: 4px;
+  --nl-space-2: 6px;
+  --nl-space-3: 8px;
+  --nl-space-4: 12px;
+  --nl-space-5: 16px;
+  --nl-space-6: 20px;
+  --nl-space-7: 24px;
+  --nl-space-8: 32px;
+  --nl-space-9: 40px;
+  --nl-space-10: 48px;
+  --nl-space-12: 64px;
+  
+  /* Radii */
+  --nl-radius-sm: 8px;
+  --nl-radius: 12px;
+  --nl-radius-lg: 16px;
+  
+  /* Motion */
+  --nl-motion-fast: 90ms;
+  --nl-motion: 180ms;
+  --nl-motion-slow: 300ms;
+  --nl-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root.light {
+  --nl-bg: #f7f9fc;
+  --nl-surface: #ffffff;
+  --nl-elev: #f1f5fb;
+  --nl-text: #111318;
+  --nl-muted: #5b6577;
+  --nl-keyline: rgba(17,19,24,0.08);
+  --nl-brand: #335cff;
+  --nl-brand-ink: #e7ebff;
+  --nl-accent: #1a9c73;
+  --nl-border: rgba(0,0,0,0.08);
+  --nl-shadow: 0 6px 18px rgba(10,18,30,0.12);
+}
+
+/* shadcn/ui CSS variables for compatibility */
+:root {
+  --background: var(--nl-bg);
+  --foreground: var(--nl-text);
+  --card: var(--nl-surface);
+  --card-foreground: var(--nl-text);
+  --popover: var(--nl-surface);
+  --popover-foreground: var(--nl-text);
+  --primary: var(--nl-brand);
+  --primary-foreground: var(--nl-brand-ink);
+  --secondary: var(--nl-elev);
+  --secondary-foreground: var(--nl-text);
+  --muted: var(--nl-elev);
+  --muted-foreground: var(--nl-muted);
+  --accent: var(--nl-accent);
+  --accent-foreground: var(--nl-text);
+  --destructive: var(--nl-danger);
+  --destructive-foreground: var(--nl-text);
+  --border: var(--nl-border);
+  --input: var(--nl-border);
+  --ring: var(--nl-brand);
+  --radius: var(--nl-radius);
+}
+
+:root.light {
+  --background: var(--nl-bg);
+  --foreground: var(--nl-text);
+  --card: var(--nl-surface);
+  --card-foreground: var(--nl-text);
+  --popover: var(--nl-surface);
+  --popover-foreground: var(--nl-text);
+  --primary: var(--nl-brand);
+  --primary-foreground: var(--nl-brand-ink);
+  --secondary: var(--nl-elev);
+  --secondary-foreground: var(--nl-text);
+  --muted: var(--nl-elev);
+  --muted-foreground: var(--nl-muted);
+  --accent: var(--nl-accent);
+  --accent-foreground: var(--nl-text);
+  --destructive: var(--nl-danger);
+  --destructive-foreground: var(--nl-text);
+  --border: var(--nl-border);
+  --input: var(--nl-border);
+  --ring: var(--nl-brand);
+}
