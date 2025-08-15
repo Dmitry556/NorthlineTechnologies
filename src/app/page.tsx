@@ -1689,7 +1689,7 @@ export default function RootPage() {
                   <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>database</span>
                 </div>
                 <div className="terminal-content">
-                  <div>$ psql -c "SELECT NOW()"</div>
+                  <div>$ psql -c &quot;SELECT NOW()&quot;</div>
                   <div style={{ color: '#8ce0c3', fontSize: '9px' }}>2025-08-15 12:34:56</div>
                   <div>$ pg_isready -h localhost</div>
                   <div style={{ color: '#79e2a6', fontSize: '9px' }}>accepting connections</div>
@@ -2103,7 +2103,7 @@ export default function RootPage() {
               }}>
                 #!/bin/bash<br/>
                 for i in {'{1..5}'}; do<br/>
-                &nbsp;&nbsp;echo "Server $i: OK"<br/>
+                &nbsp;&nbsp;echo &quot;Server $i: OK&quot;<br/>
                 done
               </div>
 
@@ -2355,7 +2355,7 @@ export default function RootPage() {
                 opacity: '0.15'
               }}>
                 ./deploy.sh production<br/>
-                echo "Deployment complete"
+                echo &quot;Deployment complete&quot;
               </div>
 
               <div className="terminal-window" style={{
