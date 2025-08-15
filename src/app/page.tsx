@@ -347,10 +347,12 @@ export default function RootPage() {
             position: absolute;
             inset: 0;
             background-image: 
-              linear-gradient(rgba(233, 237, 243, 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(233, 237, 243, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask: radial-gradient(600px circle at 50% 0%, black, transparent);
+              linear-gradient(rgba(122, 162, 255, 0.06) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(122, 162, 255, 0.06) 1px, transparent 1px),
+              radial-gradient(circle at 20% 30%, rgba(140, 224, 195, 0.02) 2px, transparent 2px),
+              radial-gradient(circle at 80% 70%, rgba(121, 226, 166, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px, 60px 60px, 120px 120px, 80px 80px;
+            mask: radial-gradient(800px circle at 50% 0%, black, transparent 70%);
             pointer-events: none;
           }
           
@@ -368,9 +370,67 @@ export default function RootPage() {
             pointer-events: none;
           }
           
+          .terminal-window {
+            position: absolute;
+            background: rgba(11, 12, 14, 0.4);
+            border: 1px solid rgba(122, 162, 255, 0.05);
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            backdrop-filter: blur(20px);
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(1px);
+          }
+          
+          .terminal-header {
+            background: rgba(31, 31, 31, 0.9);
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(122, 162, 255, 0.1);
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+          }
+          
+          .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+          }
+          
+          .terminal-content {
+            padding: 12px;
+            color: #8ce0c3;
+            overflow: hidden;
+          }
+          
+          .floating-code {
+            position: absolute;
+            background: rgba(11, 12, 14, 0.3);
+            border: 1px solid rgba(122, 162, 255, 0.03);
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 10px;
+            padding: 8px 10px;
+            color: rgba(140, 224, 195, 0.3);
+            backdrop-filter: blur(15px);
+            pointer-events: none;
+            z-index: 1;
+            transform: rotate(-2deg);
+            opacity: 0.4;
+            filter: blur(0.5px);
+          }
+          
           @keyframes float {
             0%, 100% { transform: translate(-50%, 0px) rotate(0deg); }
             50% { transform: translate(-50%, -20px) rotate(180deg); }
+          }
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
           }
           
           .card {
@@ -818,6 +878,86 @@ export default function RootPage() {
             pointerEvents: 'none'
           }} />
           
+          {/* Terminal windows and code snippets - only render client-side */}
+          {mounted && (
+            <>
+              <div className="terminal-window" style={{
+                top: '10%',
+                left: '5%',
+                width: '280px',
+                transform: 'rotate(-3deg)',
+                opacity: '0.25'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>~/deploy</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ kubectl get pods</div>
+                  <div style={{ color: '#79e2a6' }}>northline-api-7d4b8f-running</div>
+                  <div style={{ color: '#79e2a6' }}>northline-db-9k2m1x-running</div>
+                  <div style={{ color: '#ffd166' }}>monitoring-3x7q9p-pending</div>
+                  <div>$ docker logs --tail=50 northline</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>[INFO] Server listening on :8080</div>
+                </div>
+              </div>
+
+              <div className="terminal-window" style={{
+                top: '20%',
+                right: '5%',
+                width: '240px',
+                transform: 'rotate(2deg)',
+                opacity: '0.22'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>monitoring.sh</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ ./monitor-infrastructure.sh</div>
+                  <div style={{ color: '#79e2a6' }}>✓ CPU: 23% | RAM: 67%</div>
+                  <div style={{ color: '#79e2a6' }}>✓ Network: 1.2Gb/s</div>
+                  <div style={{ color: '#8ce0c3' }}>⚡ Load balancer: healthy</div>
+                  <div>$ tail -f /var/log/northline.log</div>
+                </div>
+              </div>
+
+              <div className="floating-code" style={{
+                bottom: '25%',
+                left: '8%',
+                transform: 'rotate(-4deg)',
+                opacity: '0.25'
+              }}>
+                terraform apply -auto-approve<br/>
+                aws s3 sync ./dist s3://bucket
+              </div>
+
+              <div className="floating-code" style={{
+                top: '35%',
+                right: '15%',
+                transform: 'rotate(3deg)',
+                opacity: '0.22'
+              }}>
+                ssh -i key.pem user@server<br/>
+                systemctl restart nginx
+              </div>
+
+              <div className="floating-code" style={{
+                bottom: '15%',
+                right: '8%',
+                transform: 'rotate(-1deg)',
+                opacity: '0.2'
+              }}>
+                git push origin production<br/>
+                docker-compose up -d
+              </div>
+            </>
+          )}
+
           {/* Minimal floating elements */}
           <div style={{
             position: 'absolute',
@@ -828,7 +968,8 @@ export default function RootPage() {
             background: 'radial-gradient(circle, rgba(122, 162, 255, 0.08), transparent)',
             borderRadius: '50%',
             filter: 'blur(40px)',
-            animation: 'float 12s ease-in-out infinite'
+            animation: 'float 12s ease-in-out infinite',
+            zIndex: 0
           }} />
           <div style={{
             position: 'absolute',
@@ -839,13 +980,15 @@ export default function RootPage() {
             background: 'radial-gradient(circle, rgba(140, 224, 195, 0.06), transparent)',
             borderRadius: '50%',
             filter: 'blur(30px)',
-            animation: 'float 10s ease-in-out infinite 3s'
+            animation: 'float 10s ease-in-out infinite 3s',
+            zIndex: 0
           }} />
           <div style={containerStyle}>
             <h1 className="text-gradient" style={{
               marginBottom: '40px',
               lineHeight: '1.1',
-              position: 'relative'
+              position: 'relative',
+              zIndex: 10
             }}>
               Your Infrastructure Runs Itself
             </h1>
@@ -856,7 +999,9 @@ export default function RootPage() {
               marginBottom: '40px',
               maxWidth: '600px',
               margin: '0 auto 40px',
-              lineHeight: '1.5'
+              lineHeight: '1.5',
+              position: 'relative',
+              zIndex: 10
             }}>
               We build and manage the technical foundation that lets you focus on growth. 
               Secure, compliant, and ready to scale from day one.
@@ -892,6 +1037,176 @@ export default function RootPage() {
               </button>
             </div>
 
+          </div>
+        </section>
+
+        {/* Live Infrastructure Metrics */}
+        <section style={{
+          padding: '40px 0',
+          background: `linear-gradient(135deg, ${colors.elev} 0%, ${colors.surface} 100%)`,
+          borderTop: `1px solid ${colors.keyline}`,
+          borderBottom: `1px solid ${colors.keyline}`
+        }}>
+          <div style={containerStyle}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '32px',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                padding: '20px 16px',
+                background: 'rgba(122, 162, 255, 0.05)',
+                borderRadius: '12px',
+                border: `1px solid rgba(122, 162, 255, 0.1)`
+              }}>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: colors.brand,
+                  marginBottom: '8px',
+                  fontFamily: 'monospace'
+                }}>
+                  1,247
+                </div>
+                <div style={{
+                  fontSize: '13px',
+                  color: colors.muted,
+                  fontWeight: '500',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  Servers Monitoring
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  color: colors.success,
+                  marginTop: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px'
+                }}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: colors.success,
+                    animation: 'pulse 2s infinite'
+                  }}></div>
+                  LIVE
+                </div>
+              </div>
+
+              <div style={{
+                padding: '20px 16px',
+                background: 'rgba(121, 226, 166, 0.05)',
+                borderRadius: '12px',
+                border: `1px solid rgba(121, 226, 166, 0.1)`
+              }}>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: colors.success,
+                  marginBottom: '8px',
+                  fontFamily: 'monospace'
+                }}>
+                  99.7%
+                </div>
+                <div style={{
+                  fontSize: '13px',
+                  color: colors.muted,
+                  fontWeight: '500',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  Uptime This Month
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  color: colors.success,
+                  marginTop: '4px'
+                }}>
+                  SLA: 99.9% guaranteed
+                </div>
+              </div>
+
+              <div style={{
+                padding: '20px 16px',
+                background: 'rgba(140, 224, 195, 0.05)',
+                borderRadius: '12px',
+                border: `1px solid rgba(140, 224, 195, 0.1)`
+              }}>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: colors.accent,
+                  marginBottom: '8px',
+                  fontFamily: 'monospace'
+                }}>
+                  2.1 min
+                </div>
+                <div style={{
+                  fontSize: '13px',
+                  color: colors.muted,
+                  fontWeight: '500',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  Avg Response Time
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  color: colors.success,
+                  marginTop: '4px'
+                }}>
+                  Target: &lt;5 minutes
+                </div>
+              </div>
+
+              <div style={{
+                padding: '20px 16px',
+                background: 'rgba(121, 226, 166, 0.05)',
+                borderRadius: '12px',
+                border: `1px solid rgba(121, 226, 166, 0.1)`
+              }}>
+                <div style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: colors.success,
+                  marginBottom: '8px',
+                  fontFamily: 'monospace'
+                }}>
+                  0
+                </div>
+                <div style={{
+                  fontSize: '13px',
+                  color: colors.muted,
+                  fontWeight: '500',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>
+                  Active Incidents
+                </div>
+                <div style={{
+                  fontSize: '11px',
+                  color: colors.success,
+                  marginTop: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px'
+                }}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: colors.success
+                  }}></div>
+                  All Systems Operational
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1312,6 +1627,233 @@ export default function RootPage() {
           </div>
         </section>
 
+        {/* Infrastructure Status Dashboard */}
+        <section style={{
+          padding: '60px 0',
+          background: colors.bg,
+          borderTop: `1px solid ${colors.keyline}`,
+          borderBottom: `1px solid ${colors.keyline}`,
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Background terminal windows - only render client-side */}
+          {mounted && (
+            <>
+              <div className="terminal-window" style={{
+                position: 'absolute',
+                top: '5%',
+                left: '3%',
+                width: '200px',
+                transform: 'rotate(-8deg)',
+                opacity: '0.25'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>logs</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ tail -f access.log</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>200 GET /api/health</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>200 GET /api/metrics</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>201 POST /api/deploy</div>
+                  <div>$ grep ERROR system.log</div>
+                  <div style={{ color: '#ffd166', fontSize: '9px' }}>No errors found</div>
+                </div>
+              </div>
+
+              <div className="floating-code" style={{
+                position: 'absolute',
+                top: '8%',
+                right: '5%',
+                transform: 'rotate(5deg)',
+                opacity: '0.3'
+              }}>
+                curl -s localhost:8080/health<br/>
+                echo $? # Exit code: 0
+              </div>
+
+              <div className="terminal-window" style={{
+                position: 'absolute',
+                bottom: '8%',
+                right: '2%',
+                width: '240px',
+                transform: 'rotate(3deg)',
+                opacity: '0.2'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>database</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ psql -c "SELECT NOW()"</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>2025-08-15 12:34:56</div>
+                  <div>$ pg_isready -h localhost</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>accepting connections</div>
+                  <div>$ redis-cli ping</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>PONG</div>
+                </div>
+              </div>
+
+              <div className="floating-code" style={{
+                position: 'absolute',
+                bottom: '15%',
+                left: '8%',
+                transform: 'rotate(-3deg)',
+                opacity: '0.25'
+              }}>
+                docker ps | grep northline<br/>
+                nginx -t && nginx -s reload
+              </div>
+            </>
+          )}
+          <div style={containerStyle}>
+            <div style={{ 
+              maxWidth: '900px', 
+              margin: '0 auto',
+              background: colors.surface,
+              borderRadius: '16px',
+              border: `1px solid ${colors.border}`,
+              overflow: 'hidden'
+            }}>
+              {/* Dashboard Header */}
+              <div style={{
+                padding: '20px 24px',
+                background: colors.elev,
+                borderBottom: `1px solid ${colors.keyline}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between'
+              }}>
+                <div>
+                  <h3 style={{
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    color: colors.text,
+                    margin: '0'
+                  }}>
+                    Infrastructure Status
+                  </h3>
+                  <p style={{
+                    fontSize: '13px',
+                    color: colors.muted,
+                    margin: '2px 0 0 0'
+                  }}>
+                    Live monitoring dashboard
+                  </p>
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  <div style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: colors.success,
+                    animation: 'pulse 2s infinite'
+                  }}></div>
+                  <span style={{
+                    fontSize: '12px',
+                    color: colors.success,
+                    fontWeight: '600'
+                  }}>
+                    ALL SYSTEMS OPERATIONAL
+                  </span>
+                </div>
+              </div>
+
+              {/* Dashboard Content */}
+              <div style={{ padding: '24px' }}>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                  gap: '20px',
+                  marginBottom: '24px'
+                }}>
+                  {[
+                    { label: 'API Response', value: '< 100ms', status: 'success' },
+                    { label: 'Database', value: '99.9%', status: 'success' },
+                    { label: 'Load Balancer', value: 'Online', status: 'success' },
+                    { label: 'CDN', value: 'Active', status: 'success' },
+                    { label: 'Backup Systems', value: 'Ready', status: 'success' },
+                    { label: 'SSL Certificates', value: 'Valid', status: 'success' }
+                  ].map((item, index) => (
+                    <div key={index} style={{
+                      padding: '12px',
+                      background: colors.bg,
+                      borderRadius: '8px',
+                      border: `1px solid ${colors.keyline}`,
+                      textAlign: 'center'
+                    }}>
+                      <div style={{
+                        fontSize: '11px',
+                        color: colors.muted,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        marginBottom: '6px'
+                      }}>
+                        {item.label}
+                      </div>
+                      <div style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: colors.success,
+                        fontFamily: 'monospace'
+                      }}>
+                        {item.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Recent Activity */}
+                <div style={{
+                  background: colors.bg,
+                  borderRadius: '8px',
+                  border: `1px solid ${colors.keyline}`,
+                  padding: '16px'
+                }}>
+                  <h4 style={{
+                    fontSize: '13px',
+                    color: colors.text,
+                    fontWeight: '600',
+                    margin: '0 0 12px 0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}>
+                    Recent Activity
+                  </h4>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    fontSize: '12px',
+                    fontFamily: 'monospace'
+                  }}>
+                    <div style={{ color: colors.success }}>
+                      ✓ 14:23 UTC - Backup completed successfully (Database cluster)
+                    </div>
+                    <div style={{ color: colors.success }}>
+                      ✓ 14:15 UTC - SSL certificate auto-renewed (*.northlinetech.co)
+                    </div>
+                    <div style={{ color: colors.success }}>
+                      ✓ 14:08 UTC - Security scan completed - No vulnerabilities
+                    </div>
+                    <div style={{ color: colors.muted }}>
+                      ℹ 13:45 UTC - Scheduled maintenance window opened
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials */}
         <section style={{ padding: '80px 0' }}>
           <div style={containerStyle}>
@@ -1408,8 +1950,38 @@ export default function RootPage() {
         {/* Benefits */}
         <section className="section-bg" style={{
           padding: '80px 0',
-          background: colors.surface
+          background: `linear-gradient(135deg, ${colors.surface} 0%, ${colors.elev} 50%, ${colors.surface} 100%)`,
+          position: 'relative'
         }} id="why-northline">
+          {/* Data visualization decoration */}
+          <div style={{
+            position: 'absolute',
+            top: '20px',
+            right: '5%',
+            width: '120px',
+            height: '60px',
+            opacity: 0.15,
+            pointerEvents: 'none'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'end',
+              height: '100%',
+              gap: '4px'
+            }}>
+              {[30, 45, 60, 40, 55, 70, 50, 65].map((height, i) => (
+                <div 
+                  key={i}
+                  style={{
+                    width: '8px',
+                    height: `${height}%`,
+                    background: colors.brand,
+                    borderRadius: '2px 2px 0 0'
+                  }}
+                />
+              ))}
+            </div>
+          </div>
           <div style={containerStyle}>
             <h2 style={{
               textAlign: 'center',
@@ -1459,7 +2031,147 @@ export default function RootPage() {
         </section>
 
         {/* How We Work */}
-        <section style={{ padding: '80px 0' }}>
+        <section style={{ 
+          padding: '80px 0',
+          background: `linear-gradient(135deg, ${colors.surface} 0%, ${colors.elev} 100%)`,
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Code snippet background decoration */}
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            right: '-10%',
+            width: '300px',
+            height: '200px',
+            background: `linear-gradient(135deg, rgba(122, 162, 255, 0.03), transparent)`,
+            borderRadius: '8px',
+            border: `1px solid rgba(122, 162, 255, 0.05)`,
+            padding: '16px',
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            color: colors.muted,
+            opacity: 0.4,
+            transform: 'rotate(-15deg)',
+            pointerEvents: 'none'
+          }}>
+            <div>#!/bin/bash</div>
+            <div># Infrastructure as Code</div>
+            <div>terraform plan</div>
+            <div>terraform apply</div>
+            <div>&nbsp;</div>
+            <div>ansible-playbook -i inventory</div>
+            <div>&nbsp;&nbsp;deploy.yml --check</div>
+            <div>&nbsp;</div>
+            <div># Monitoring deployment</div>
+            <div>kubectl get pods -n monitoring</div>
+            <div>STATUS: Running ✓</div>
+          </div>
+
+          {/* Additional terminal windows - only render client-side */}
+          {mounted && (
+            <>
+              <div className="terminal-window" style={{
+                top: '8%',
+                left: '2%',
+                width: '260px',
+                transform: 'rotate(-5deg)',
+                opacity: '0.4'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>~/.northline</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ ansible-playbook deploy.yml</div>
+                  <div style={{ color: '#79e2a6' }}>PLAY [Deploy Application]</div>
+                  <div style={{ color: '#8ce0c3' }}>TASK [Update packages] ***</div>
+                  <div style={{ color: '#79e2a6' }}>ok: [web-01]</div>
+                  <div style={{ color: '#79e2a6' }}>ok: [web-02]</div>
+                  <div>$ systemctl status northline</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>● Active: running</div>
+                </div>
+              </div>
+
+              <div className="floating-code" style={{
+                top: '15%',
+                right: '3%',
+                transform: 'rotate(4deg)',
+                opacity: '0.5'
+              }}>
+                #!/bin/bash<br/>
+                for i in {'{1..5}'}; do<br/>
+                &nbsp;&nbsp;echo "Server $i: OK"<br/>
+                done
+              </div>
+
+              <div className="terminal-window" style={{
+                bottom: '5%',
+                right: '8%',
+                width: '220px',
+                transform: 'rotate(2deg)',
+                opacity: '0.3'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>htop</span>
+                </div>
+                <div className="terminal-content">
+                  <div style={{ color: '#8ce0c3' }}>CPU: 18% [||||    ]</div>
+                  <div style={{ color: '#79e2a6' }}>Mem: 2.1/8.0GB</div>
+                  <div style={{ color: '#ffd166' }}>Load: 0.84 0.92 1.03</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>northline-api: 256MB</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>postgres: 180MB</div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Terminal window decoration */}
+          <div style={{
+            position: 'absolute',
+            bottom: '15%',
+            left: '-5%',
+            width: '280px',
+            height: '160px',
+            background: colors.bg,
+            borderRadius: '8px',
+            border: `1px solid ${colors.keyline}`,
+            opacity: 0.3,
+            transform: 'rotate(8deg)',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}>
+            <div style={{
+              background: colors.surface,
+              borderRadius: '8px 8px 0 0',
+              padding: '8px 12px',
+              borderBottom: `1px solid ${colors.keyline}`,
+              fontSize: '10px',
+              color: colors.muted
+            }}>
+              terminal - northline@prod-server
+            </div>
+            <div style={{
+              padding: '12px',
+              fontFamily: 'monospace',
+              fontSize: '9px',
+              lineHeight: '1.4',
+              color: colors.success
+            }}>
+              $ uptime<br/>
+              &nbsp;12:47:32 up 247 days, 3:21<br/>
+              $ docker ps | wc -l<br/>
+              &nbsp;47<br/>
+              $ systemctl status nginx<br/>
+              &nbsp;● active (running)
+            </div>
+          </div>
+
           <div style={containerStyle}>
             <h2 style={{
               textAlign: 'center',
@@ -1629,8 +2341,58 @@ export default function RootPage() {
           padding: '80px 0 40px',
           background: colors.surface,
           borderTop: `1px solid ${colors.keyline}`,
-          position: 'relative'
+          position: 'relative',
+          overflow: 'hidden'
         }}>
+          {/* Footer code decorations - only render client-side */}
+          {mounted && (
+            <>
+              <div className="floating-code" style={{
+                position: 'absolute',
+                top: '15%',
+                left: '2%',
+                transform: 'rotate(-6deg)',
+                opacity: '0.15'
+              }}>
+                ./deploy.sh production<br/>
+                echo "Deployment complete"
+              </div>
+
+              <div className="terminal-window" style={{
+                position: 'absolute',
+                top: '8%',
+                right: '3%',
+                width: '180px',
+                transform: 'rotate(4deg)',
+                opacity: '0.2'
+              }}>
+                <div className="terminal-header">
+                  <div className="terminal-dot" style={{ background: '#ff5f56' }}></div>
+                  <div className="terminal-dot" style={{ background: '#ffbd2e' }}></div>
+                  <div className="terminal-dot" style={{ background: '#27ca3f' }}></div>
+                  <span style={{ marginLeft: '8px', fontSize: '10px', color: '#888' }}>git</span>
+                </div>
+                <div className="terminal-content">
+                  <div>$ git status</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>On branch main</div>
+                  <div style={{ color: '#8ce0c3', fontSize: '9px' }}>Clean working tree</div>
+                  <div>$ git push origin main</div>
+                  <div style={{ color: '#79e2a6', fontSize: '9px' }}>Everything up-to-date</div>
+                </div>
+              </div>
+
+              <div className="floating-code" style={{
+                position: 'absolute',
+                bottom: '20%',
+                right: '8%',
+                transform: 'rotate(-2deg)',
+                opacity: '0.1'
+              }}>
+                uptime<br/>
+                free -h | grep Mem
+              </div>
+            </>
+          )}
           <div style={containerStyle}>
             <div style={{
               display: 'grid',
